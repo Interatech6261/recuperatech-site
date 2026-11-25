@@ -1,0 +1,115 @@
+---
+import { buildWhatsAppUrl } from '../config/site';
+import type { ServiceItem } from '../data/services';
+
+interface Props {
+  service: ServiceItem;
+  categoryId: string;
+}
+
+const { service, categoryId } = Astro.props;
+const whatsappUrl = buildWhatsAppUrl(service.whatsappMessage);
+---
+
+<article class="service-detail-card">
+  <div class="service-detail-card__head">
+    <span class="service-detail-card__badge" aria-hidden="true"></span>
+    <h3 class="service-detail-card__title">{service.name}</h3>
+  </div>
+
+  <p class="service-detail-card__desc">{service.description}</p>
+
+  <dl class="service-detail-card__meta">
+    <div>
+      <dt>Problema que resolve</dt>
+      <dd>{service.problemSolved}</dd>
+    </div>
+    <div>
+      <dt>Benefício esperado</dt>
+      <dd>{service.expectedBenefit}</dd>
+    </div>
+  </dl>
+
+  <div class="service-detail-card__footer">
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn btn--outline-red btn--sm"
+      data-track="whatsapp_click"
+      data-cta-position="service_card"
+      data-service-category={categoryId}
+    >
+      Solicitar orçamento
+    </a>
+  </div>
+</article>
+
+<style>
+  .service-detail-card {
+    background-color: var(--color-white-pure);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .service-detail-card:hover {
+    border-color: var(--color-red);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .service-detail-card__head {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+  }
+
+  .service-detail-card__badge {
+    flex-shrink: 0;
+    width: 10px;
+    height: 18px;
+    background-color: var(--color-red);
+    transform: skewX(-20deg);
+  }
+
+  .service-detail-card__title {
+    font-size: 1.08rem;
+    color: var(--color-black);
+  }
+
+  .service-detail-card__desc {
+    font-size: 0.925rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+  }
+
+  .service-detail-card__meta {
+    margin: 0;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--color-gray-100);
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  .service-detail-card__meta dt {
+    font-weight: 700;
+    color: var(--color-black);
+    margin-bottom: 0.1rem;
+  }
+
+  .service-detail-card__meta dd {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
+
+  .service-detail-card__footer {
+    margin-top: auto;
+    padding-top: 0.5rem;
+  }
+</style>

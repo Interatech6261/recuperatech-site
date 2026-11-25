@@ -1,0 +1,93 @@
+---
+interface Props {
+  variant?: 'dark' | 'light';
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const { variant = 'dark', size = 'md' } = Astro.props;
+const textColor = variant === 'dark' ? '#F7F7F7' : '#010101';
+const subColor = variant === 'dark' ? '#B4B4BC' : '#52525B';
+---
+
+<span class={`brand-logo brand-logo--${size}`} aria-label="RECUPERATECH — Grupo INTERATECH">
+  <svg
+    class="brand-logo__mark"
+    viewBox="0 0 44 44"
+    width="40"
+    height="40"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <!-- Diagonal geometric emblem inspired by technical precision -->
+    <polygon points="4,36 16,8 24,8 12,36" fill="#FC0203" />
+    <polygon points="18,36 30,8 38,8 26,36" fill={textColor} />
+    <polygon points="29,36 35,22 41,22 35,36" fill="#FC0203" />
+  </svg>
+  <span class="brand-logo__text">
+    <span class="brand-logo__name" style={`color: ${textColor};`}>
+      RECUPERA<span class="brand-logo__accent">TECH</span>
+    </span>
+    <span class="brand-logo__group" style={`color: ${subColor};`}>
+      Grupo INTERATECH
+    </span>
+  </span>
+</span>
+
+<style>
+  .brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .brand-logo__mark {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-logo--sm .brand-logo__mark {
+    width: 30px;
+    height: 30px;
+  }
+
+  .brand-logo--lg .brand-logo__mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand-logo__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .brand-logo__name {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.15rem;
+    letter-spacing: 0.03em;
+  }
+
+  .brand-logo--sm .brand-logo__name {
+    font-size: 1rem;
+  }
+
+  .brand-logo--lg .brand-logo__name {
+    font-size: 1.35rem;
+  }
+
+  .brand-logo__accent {
+    color: var(--color-red);
+  }
+
+  .brand-logo__group {
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+</style>

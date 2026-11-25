@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" fill="none">
+  <rect width="800" height="600" fill="#0B0B0D"/>
+  <g opacity="0.14" stroke="#FC0203" stroke-width="2">
+    <line x1="0" y1="600" x2="260" y2="0"/>
+    <line x1="520" y1="600" x2="780" y2="0"/>
+  </g>
+  <!-- Motherboard on workbench -->
+  <rect x="150" y="95" width="500" height="410" rx="12" fill="#151519" stroke="#2D2D35" stroke-width="3"/>
+  <!-- VRM Heatsinks -->
+  <rect x="180" y="125" width="44" height="175" rx="4" fill="#23232A" stroke="#3A3A44"/>
+  <rect x="240" y="120" width="175" height="36" rx="4" fill="#23232A" stroke="#3A3A44"/>
+  <!-- CPU Socket -->
+  <rect x="265" y="185" width="135" height="135" rx="8" fill="#0E0E11" stroke="#FC0203" stroke-width="2.5"/>
+  <rect x="285" y="205" width="95" height="95" rx="6" fill="#1F1F26" stroke="#F7F7F7" stroke-opacity="0.35" stroke-width="2"/>
+  <polygon points="315,268 332,235 341,235 324,268" fill="#FC0203"/>
+  <polygon points="332,268 349,235 358,235 341,268" fill="#F7F7F7"/>
+  <!-- RAM Slots -->
+  <g fill="#26262E" stroke="#3E3E48">
+    <rect x="445" y="160" width="14" height="160" rx="2"/>
+    <rect x="470" y="160" width="14" height="160" rx="2"/>
+    <rect x="495" y="160" width="14" height="160" rx="2"/>
+    <rect x="520" y="160" width="14" height="160" rx="2"/>
+  </g>
+  <rect x="470" y="160" width="14" height="160" rx="2" fill="#FC0203" fill-opacity="0.7"/>
+  <rect x="520" y="160" width="14" height="160" rx="2" fill="#FC0203" fill-opacity="0.7"/>
+  <!-- PCIe Slots -->
+  <rect x="210" y="365" width="280" height="14" rx="2" fill="#2C2C35" stroke="#F7F7F7" stroke-opacity="0.4"/>
+  <rect x="210" y="405" width="220" height="12" rx="2" fill="#222229"/>
+  <!-- Chipset heatsink -->
+  <rect x="515" y="365" width="95" height="95" rx="6" fill="#1C1C22" stroke="#FC0203" stroke-width="2"/>
+  <!-- Precision Screwdriver -->
+  <g transform="translate(595 270) rotate(28)">
+    <rect x="0" y="0" width="22" height="115" rx="6" fill="#FC0203"/>
+    <rect x="7" y="115" width="8" height="90" fill="#D4D4D8"/>
+  </g>
+</svg>

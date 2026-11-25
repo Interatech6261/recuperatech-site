@@ -1,0 +1,216 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import CtaBlock from '../components/CtaBlock.astro';
+import { buildWhatsAppUrl, SITE_CONFIG } from '../config/site';
+import { SERVICE_CATEGORIES, COMBINED_SOLUTIONS } from '../data/services';
+
+const servicesSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'OfferCatalog',
+  name: 'Serviços de Informática e Manutenção de PCs — RECUPERATECH',
+  provider: {
+    '@type': 'ComputerRepair',
+    name: SITE_CONFIG.name,
+    url: SITE_CONFIG.url,
+  },
+  itemListElement: SERVICE_CATEGORIES.map((category) => ({
+    '@type': 'OfferCatalog',
+    name: category.title,
+    itemListElement: category.services.map((service) => ({
+      '@type': 'Service',
+      name: service.name,
+      description: service.description,
+      areaServed: 'Volta Redonda - RJ',
+    })),
+  })),
+};
+---
+
+<BaseLayout
+  title="Serviços de Informática e Manutenção de PCs | RECUPERATECH"
+  description="Conheça os serviços de montagem, manutenção, upgrades, formatação e reparo de computadores e notebooks em Volta Redonda."
+  canonicalPath="/servicos/"
+  breadcrumbs={[
+    { name: 'Home', url: '/' },
+    { name: 'Serviços', url: '/servicos/' },
+  ]}
+  extraSchemas={[servicesSchema]}
+>
+  <section class="page-hero diag-grid-bg">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">Serviços</span>
+      </nav>
+      <h1 class="page-hero__title">Serviços Técnicos RECUPERATECH</h1>
+      <p class="page-hero__subtitle">
+        Soluções completas em montagem, upgrades, manutenção preventiva, software, notebooks, backup e diagnóstico técnico em Volta Redonda - RJ.
+      </p>
+
+      <nav class="category-pills" aria-label="Atalhos para categorias de serviços">
+        {SERVICE_CATEGORIES.map((cat) => (
+          <a href={`#${cat.id}`} class="category-pill">
+            {cat.shortTitle}
+          </a>
+        ))}
+        <a href="#solucoes-combinadas" class="category-pill category-pill--accent">
+          Soluções combinadas
+        </a>
+      </nav>
+    </div>
+  </section>
+
+  {SERVICE_CATEGORIES.map((category, index) => {
+    const isAltBg = index % 2 === 1;
+    const categoryWhatsappUrl = buildWhatsAppUrl(category.ctaMessage);
+    return (
+      <section
+        id={category.id}
+        class:list={['section', isAltBg ? 'section--white' : 'section--light']}
+      >
+        <div class="container">
+          <div class="category-header">
+            <div>
+              <span class="eyebrow">{category.code}</span>
+              <h2 class="section-title">{category.title}</h2>
+              <p class="section-lead">{category.summary}</p>
+            </div>
+            <a
+              href={categoryWhatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn btn--primary"
+              data-track="whatsapp_click"
+              data-cta-position="services_category_header"
+              data-service-category={category.id}
+            >
+              {category.ctaLabel}
+            </a>
+          </div>
+
+          <div class="grid-3">
+            {category.services.map((service) => (
+              <ServiceCard service={service} categoryId={category.id} />
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  })}
+
+  <!-- Soluções combinadas -->
+  <section id="solucoes-combinadas" class="section section--dark diag-grid-bg">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow">Atendimentos integrados</span>
+        <h2 class="section-title">Soluções combinadas</h2>
+        <p class="section-lead">
+          Combinações frequentes para resolver mais de uma necessidade técnica em uma única avaliação em bancada.
+        </p>
+      </div>
+
+      <div class="grid-2">
+        {COMBINED_SOLUTIONS.map((sol) => {
+          const solWhatsappUrl = buildWhatsAppUrl(sol.whatsappMessage);
+          return (
+            <article class="combined-card">
+              <h3 class="combined-card__title">{sol.title}</h3>
+              <p class="combined-card__desc">{sol.description}</p>
+              <a
+                href={solWhatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn--primary btn--sm"
+                data-track="whatsapp_click"
+                data-cta-position="services_combined"
+                data-service-category="solucoes-combinadas"
+              >
+                Solicitar orçamento
+              </a>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <CtaBlock
+    title="Precisa de ajuda para identificar o serviço ideal?"
+    subtitle="Explique o que está acontecendo com o seu computador ou notebook e receba orientação da equipe RECUPERATECH."
+    buttonLabel="CONVERSAR COM UM TÉCNICO"
+    whatsappMessage="Olá! Gostaria de conversar com um técnico da RECUPERATECH para avaliar o meu equipamento."
+    ctaPosition="services_final_cta"
+  />
+</BaseLayout>
+
+<style>
+  .category-pills {
+    margin-top: 1.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .category-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 999px;
+    background-color: var(--color-surface-dark-2);
+    color: var(--color-text-light-muted);
+    border: 1px solid var(--color-border-dark);
+    transition: border-color var(--transition-fast), color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .category-pill:hover {
+    border-color: var(--color-red);
+    color: var(--color-white-pure);
+  }
+
+  .category-pill--accent {
+    border-color: rgba(252, 2, 3, 0.55);
+    color: var(--color-white-pure);
+  }
+
+  .category-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+    margin-bottom: 2.25rem;
+  }
+
+  @media (min-width: 900px) {
+    .category-header {
+      flex-direction: row;
+      align-items: flex-end;
+    }
+  }
+
+  .combined-card {
+    background-color: var(--color-surface-dark-2);
+    border: 1px solid var(--color-border-dark);
+    border-left: 4px solid var(--color-red);
+    border-radius: var(--radius-md);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  .combined-card__title {
+    font-size: 1.15rem;
+    color: var(--color-white-pure);
+  }
+
+  .combined-card__desc {
+    color: var(--color-text-light-muted);
+    font-size: 0.94rem;
+  }
+</style>

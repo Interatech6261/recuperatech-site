@@ -1,0 +1,236 @@
+---
+import Logo from './Logo.astro';
+import { NAV_LINKS, SITE_CONFIG, buildWhatsAppUrl } from '../config/site';
+
+const currentYear = new Date().getFullYear();
+const whatsappFooterUrl = buildWhatsAppUrl();
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <div class="site-footer__brand">
+        <a href="/" aria-label="RECUPERATECH — Página inicial">
+          <Logo variant="dark" size="md" />
+        </a>
+        <p class="site-footer__desc">
+          Montagem, manutenção e soluções técnicas para computadores e notebooks.
+        </p>
+        <p class="site-footer__group-tag">
+          Uma marca do <strong>{SITE_CONFIG.group}</strong>
+        </p>
+      </div>
+
+      <div>
+        <h2 class="site-footer__heading">Navegação</h2>
+        <ul class="site-footer__list">
+          {NAV_LINKS.map((link) => (
+            <li>
+              <a href={link.href} class="site-footer__link">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__heading">Contato e Localização</h2>
+        <ul class="site-footer__list">
+          <li>
+            <a
+              href={SITE_CONFIG.phone.href}
+              class="site-footer__link"
+              data-track="phone_click"
+              data-cta-position="footer"
+              data-service-category="geral"
+            >
+              Telefone: {SITE_CONFIG.phone.display}
+            </a>
+          </li>
+          <li>
+            <a
+              href={whatsappFooterUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="site-footer__link site-footer__link--highlight"
+              data-track="whatsapp_click"
+              data-cta-position="footer"
+              data-service-category="geral"
+            >
+              WhatsApp: {SITE_CONFIG.whatsapp.display}
+            </a>
+          </li>
+          <li class="site-footer__address">
+            {SITE_CONFIG.address.full}
+          </li>
+          <li>
+            <a
+              href={SITE_CONFIG.maps.queryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="site-footer__link"
+            >
+              Ver no Google Maps
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="site-footer__heading">Redes Sociais e Atendimento</h2>
+        <ul class="site-footer__list">
+          <li>
+            <a
+              href={SITE_CONFIG.social.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="site-footer__link"
+            >
+              Instagram (@recuperatech.vr)
+            </a>
+          </li>
+          <li>
+            <a
+              href={SITE_CONFIG.social.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="site-footer__link"
+            >
+              Facebook (Recupera Tech)
+            </a>
+          </li>
+        </ul>
+
+        <div class="site-footer__cta-wrap">
+          <a
+            href={whatsappFooterUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn--primary btn--sm"
+            data-track="whatsapp_click"
+            data-cta-position="footer_button"
+            data-service-category="geral"
+          >
+            Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p>
+        &copy; {currentYear} {SITE_CONFIG.fullTitle}. Todos os direitos reservados.
+      </p>
+      <button type="button" id="open-cookie-settings" class="site-footer__cookie-btn">
+        Preferências de cookies
+      </button>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--color-black);
+    color: var(--color-text-light);
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+    border-top: 3px solid var(--color-red);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--color-border-dark);
+  }
+
+  @media (min-width: 640px) {
+    .site-footer__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-footer__grid {
+      grid-template-columns: 1.4fr 1fr 1.3fr 1fr;
+    }
+  }
+
+  .site-footer__desc {
+    margin-top: 1rem;
+    color: var(--color-text-light-muted);
+    font-size: 0.9375rem;
+    max-width: 34ch;
+  }
+
+  .site-footer__group-tag {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--color-text-light-muted);
+  }
+
+  .site-footer__heading {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-white-pure);
+    margin-bottom: 1rem;
+  }
+
+  .site-footer__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    font-size: 0.925rem;
+  }
+
+  .site-footer__link {
+    color: var(--color-text-light-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .site-footer__link:hover {
+    color: var(--color-white-pure);
+  }
+
+  .site-footer__link--highlight {
+    color: var(--color-white-pure);
+    font-weight: 600;
+  }
+
+  .site-footer__address {
+    color: var(--color-text-light-muted);
+    line-height: 1.5;
+  }
+
+  .site-footer__cta-wrap {
+    margin-top: 1.25rem;
+  }
+
+  .site-footer__bottom {
+    padding-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    font-size: 0.85rem;
+    color: var(--color-text-light-muted);
+  }
+
+  .site-footer__cookie-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: var(--color-text-light-muted);
+    font-size: 0.85rem;
+    text-decoration: underline;
+  }
+
+  .site-footer__cookie-btn:hover {
+    color: var(--color-white-pure);
+  }
+</style>

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" fill="none">
+  <rect width="800" height="600" fill="#0B0B0D"/>
+  <!-- Anti-static mat -->
+  <rect x="70" y="70" width="660" height="460" rx="14" fill="#121216" stroke="#26262E" stroke-width="2"/>
+  <!-- Open Laptop Chassis -->
+  <rect x="160" y="130" width="480" height="295" rx="10" fill="#1D1D24" stroke="#3B3B45" stroke-width="3"/>
+  <!-- Internal Logic Board -->
+  <rect x="190" y="160" width="265" height="170" rx="6" fill="#0F0F12" stroke="#FC0203" stroke-width="2"/>
+  <!-- Heatpipe -->
+  <path d="M240 245 C295 245, 340 215, 415 215" stroke="#D97706" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="415" cy="215" r="34" fill="#23232B" stroke="#F7F7F7" stroke-opacity="0.4" stroke-width="2"/>
+  <!-- Battery pack -->
+  <rect x="190" y="345" width="420" height="58" rx="6" fill="#141418" stroke="#2D2D36" stroke-width="2"/>
+  <rect x="210" y="368" width="120" height="12" rx="2" fill="#FC0203"/>
+  <!-- SSD & RAM inside laptop -->
+  <rect x="475" y="165" width="135" height="46" rx="4" fill="#24242D" stroke="#3F3F4A"/>
+  <rect x="475" y="230" width="135" height="90" rx="4" fill="#17171D" stroke="#3F3F4A"/>
+  <!-- Precision tools -->
+  <rect x="160" y="455" width="150" height="14" rx="7" fill="#FC0203"/>
+  <rect x="330" y="455" width="110" height="14" rx="7" fill="#3F3F46"/>
+</svg>

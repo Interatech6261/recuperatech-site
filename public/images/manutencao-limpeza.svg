@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" fill="none">
+  <rect width="800" height="600" fill="#0D0D10"/>
+  <circle cx="400" cy="300" r="240" fill="#FC0203" fill-opacity="0.08"/>
+  <!-- Open case outline -->
+  <rect x="170" y="85" width="460" height="430" rx="10" fill="#16161B" stroke="#303038" stroke-width="3"/>
+  <!-- Cooling Fans -->
+  <g stroke="#F7F7F7" stroke-opacity="0.5" stroke-width="2">
+    <circle cx="290" cy="230" r="68" fill="#101014"/>
+    <circle cx="290" cy="230" r="18" fill="#FC0203"/>
+    <circle cx="475" cy="230" r="68" fill="#101014"/>
+    <circle cx="475" cy="230" r="18" fill="#FC0203"/>
+  </g>
+  <!-- Air flow / cleaning lines -->
+  <g stroke="#FC0203" stroke-width="3" stroke-linecap="round">
+    <path d="M210 385 H580"/>
+    <path d="M240 415 H540" stroke-opacity="0.6"/>
+    <path d="M270 445 H510" stroke-opacity="0.35"/>
+  </g>
+  <!-- Thermal paste syringe icon -->
+  <g transform="translate(530 330) rotate(-35)">
+    <rect x="0" y="25" width="24" height="95" rx="4" fill="#F7F7F7"/>
+    <rect x="6" y="0" width="12" height="25" fill="#FC0203"/>
+    <rect x="9" y="120" width="6" height="24" fill="#A1A1AA"/>
+  </g>
+</svg>

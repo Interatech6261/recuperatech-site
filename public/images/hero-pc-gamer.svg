@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" fill="none">
+  <defs>
+    <radialGradient id="redGlow" cx="55%" cy="48%" r="48%">
+      <stop offset="0%" stop-color="#FC0203" stop-opacity="0.35"/>
+      <stop offset="55%" stop-color="#FC0203" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#010101" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="caseBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1D1D22"/>
+      <stop offset="100%" stop-color="#09090B"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.07"/>
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.01"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="#010101"/>
+  <rect width="1200" height="750" fill="url(#redGlow)"/>
+  <!-- Diagonal geometric tech lines -->
+  <g opacity="0.16" stroke="#FC0203" stroke-width="2">
+    <line x1="-100" y1="750" x2="260" y2="0"/>
+    <line x1="-20" y1="750" x2="340" y2="0"/>
+    <line x1="860" y1="750" x2="1220" y2="0"/>
+    <line x1="940" y1="750" x2="1300" y2="0"/>
+  </g>
+  <!-- Desk surface -->
+  <rect x="0" y="610" width="1200" height="140" fill="#0A0A0C"/>
+  <line x1="0" y1="610" x2="1200" y2="610" stroke="#FC0203" stroke-opacity="0.45" stroke-width="2"/>
+  <!-- PC Tower Chassis -->
+  <rect x="420" y="105" width="370" height="505" rx="12" fill="url(#caseBody)" stroke="#2A2A30" stroke-width="3"/>
+  <!-- Front mesh & red accent strip -->
+  <rect x="756" y="120" width="22" height="475" rx="4" fill="#111114"/>
+  <rect x="752" y="125" width="4" height="465" rx="2" fill="#FC0203"/>
+  <!-- Tempered glass interior window -->
+  <rect x="442" y="128" width="296" height="458" rx="8" fill="#08080A" stroke="#2D2D35" stroke-width="2"/>
+  <!-- Motherboard -->
+  <rect x="462" y="148" width="205" height="310" rx="6" fill="#121216" stroke="#25252B" stroke-width="1.5"/>
+  <!-- AIO Water Cooler Pump -->
+  <circle cx="555" cy="245" r="34" fill="#18181D" stroke="#FC0203" stroke-width="3"/>
+  <circle cx="555" cy="245" r="20" fill="#0B0B0E" stroke="#FC0203" stroke-opacity="0.6" stroke-width="2"/>
+  <polygon points="546,256 555,234 562,234 553,256" fill="#FC0203"/>
+  <polygon points="556,256 565,234 571,234 562,256" fill="#F7F7F7"/>
+  <!-- Coolant Tubes -->
+  <path d="M582 225 C625 205, 650 165, 680 155" stroke="#2B2B32" stroke-width="10" stroke-linecap="round"/>
+  <path d="M585 245 C635 235, 658 190, 688 175" stroke="#232329" stroke-width="10" stroke-linecap="round"/>
+  <!-- RAM Sticks -->
+  <rect x="608" y="205" width="9" height="78" rx="2" fill="#27272E"/>
+  <rect x="610" y="207" width="5" height="74" rx="1" fill="#FC0203" fill-opacity="0.85"/>
+  <rect x="623" y="205" width="9" height="78" rx="2" fill="#27272E"/>
+  <rect x="625" y="207" width="5" height="74" rx="1" fill="#F7F7F7" fill-opacity="0.7"/>
+  <rect x="638" y="205" width="9" height="78" rx="2" fill="#27272E"/>
+  <rect x="640" y="207" width="5" height="74" rx="1" fill="#FC0203" fill-opacity="0.85"/>
+  <!-- GPU Card -->
+  <rect x="472" y="335" width="218" height="44" rx="5" fill="#1C1C22" stroke="#36363F" stroke-width="2"/>
+  <rect x="486" y="354" width="160" height="4" rx="2" fill="#FC0203"/>
+  <text x="486" y="349" fill="#F7F7F7" font-family="sans-serif" font-size="10" font-weight="700" letter-spacing="2">GEFORCE / RADEON</text>
+  <!-- PSU Shroud -->
+  <rect x="444" y="486" width="292" height="98" rx="4" fill="#101013" stroke="#222228"/>
+  <polygon points="468,545 480,520 487,520 475,545" fill="#FC0203"/>
+  <polygon points="481,545 493,520 500,520 488,545" fill="#F7F7F7"/>
+  <!-- Front RGB Fans -->
+  <g stroke="#FC0203" stroke-width="2.5">
+    <circle cx="708" cy="195" r="24" fill="#121215"/>
+    <circle cx="708" cy="270" r="24" fill="#121215"/>
+    <circle cx="708" cy="345" r="24" fill="#121215"/>
+  </g>
+  <!-- Glass sheen -->
+  <polygon points="442,128 605,128 505,586 442,586" fill="url(#glass)"/>
+</svg>

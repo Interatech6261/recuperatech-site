@@ -1,0 +1,289 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FloatingWhatsApp from '../components/FloatingWhatsApp.astro';
+import CookieConsent from '../components/CookieConsent.astro';
+import { SITE_CONFIG } from '../config/site';
+import { TRACKING_CONFIG, CONSENT_STORAGE_KEY } from '../config/tracking';
+
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  breadcrumbs?: BreadcrumbItem[];
+  extraSchemas?: Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  ogImage = '/images/hero-pc-gamer.svg',
+  noindex = false,
+  breadcrumbs = [],
+  extraSchemas = [],
+} = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, SITE_CONFIG.url).toString();
+const ogImageUrl = new URL(ogImage, SITE_CONFIG.url).toString();
+
+const localBusinessSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ComputerRepair',
+  '@id': `${SITE_CONFIG.url}/#localbusiness`,
+  name: SITE_CONFIG.name,
+  description: SITE_CONFIG.segment,
+  url: SITE_CONFIG.url,
+  telephone: '+5524992433013',
+  image: ogImageUrl,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE_CONFIG.address.street,
+    addressLocality: SITE_CONFIG.address.city,
+    addressRegion: SITE_CONFIG.address.state,
+    postalCode: SITE_CONFIG.address.postalCode,
+    addressCountry: SITE_CONFIG.address.country,
+  },
+  parentOrganization: {
+    '@type': 'Organization',
+    name: SITE_CONFIG.group,
+  },
+  sameAs: [SITE_CONFIG.social.instagram, SITE_CONFIG.social.facebook],
+  areaServed: {
+    '@type': 'City',
+    name: 'Volta Redonda',
+  },
+};
+
+const breadcrumbSchema =
+  breadcrumbs.length > 0
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((item, idx) => ({
+          '@type': 'ListItem',
+          position: idx + 1,
+          name: item.name,
+          item: new URL(item.url, SITE_CONFIG.url).toString(),
+        })),
+      }
+    : null;
+
+const allSchemas = [
+  localBusinessSchema,
+  ...(breadcrumbSchema ? [breadcrumbSchema] : []),
+  ...extraSchemas,
+];
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content={SITE_CONFIG.locale} />
+    <meta property="og:site_name" content={SITE_CONFIG.fullTitle} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImageUrl} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <!-- Google Fonts: Inter & Manrope (preconnect + swap) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Schema.org JSON-LD -->
+    {allSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    <!-- Tracking & Consent Bootstrap -->
+    <script
+      is:inline
+      define:vars={{
+        TRACKING_CONFIG,
+        CONSENT_STORAGE_KEY,
+      }}
+    >
+      window.__RECUPERATECH_TRACKING__ = TRACKING_CONFIG;
+      window.__RECUPERATECH_CONSENT_KEY__ = CONSENT_STORAGE_KEY;
+    </script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+
+    <Header />
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <Footer />
+    <FloatingWhatsApp />
+    <CookieConsent />
+
+    <!-- Client-side Event Tracking (GA4 + Meta Pixel) respecting LGPD Consent -->
+    <script is:inline>
+      (function () {
+        var cfg = window.__RECUPERATECH_TRACKING__ || {};
+        var consentKey = window.__RECUPERATECH_CONSENT_KEY__ || 'recuperatech_cookie_consent_v1';
+        var loadedGA4 = false;
+        var loadedPixel = false;
+        var loadedGTM = false;
+
+        function getConsent() {
+          try {
+            var raw = localStorage.getItem(consentKey);
+            return raw ? JSON.parse(raw) : null;
+          } catch (e) {
+            return null;
+          }
+        }
+
+        function isValidId(val, placeholder) {
+          return typeof val === 'string' && val.trim() !== '' && val !== placeholder;
+        }
+
+        function loadGTM() {
+          if (loadedGTM || !isValidId(cfg.GTM_ID, '')) return;
+          loadedGTM = true;
+          (function (w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+            var f = d.getElementsByTagName(s)[0],
+              j = d.createElement(s),
+              dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+          })(window, document, 'script', 'dataLayer', cfg.GTM_ID);
+        }
+
+        function loadGA4() {
+          if (loadedGA4 || isValidId(cfg.GTM_ID, '') || !isValidId(cfg.GA4_MEASUREMENT_ID, 'G-XXXXXXXXXX')) return;
+          loadedGA4 = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(cfg.GA4_MEASUREMENT_ID);
+          document.head.appendChild(s);
+          window.dataLayer = window.dataLayer || [];
+          window.gtag = function () {
+            window.dataLayer.push(arguments);
+          };
+          window.gtag('js', new Date());
+          window.gtag('config', cfg.GA4_MEASUREMENT_ID, { anonymize_ip: true });
+        }
+
+        function loadMetaPixel() {
+          if (loadedPixel || isValidId(cfg.GTM_ID, '') || !isValidId(cfg.META_PIXEL_ID, 'INSERIR_ID_AQUI')) return;
+          loadedPixel = true;
+          !(function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+              n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s);
+          })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+          window.fbq('init', cfg.META_PIXEL_ID);
+          window.fbq('track', 'PageView');
+          window.fbq('track', 'ViewContent', {
+            content_name: document.title,
+            content_category: window.location.pathname,
+          });
+        }
+
+        function applyConsent(consent) {
+          if (!consent) return;
+          if (consent.analytics || consent.marketing) {
+            loadGTM();
+          }
+          if (consent.analytics) {
+            loadGA4();
+          }
+          if (consent.marketing) {
+            loadMetaPixel();
+          }
+        }
+
+        window.recuperatechApplyConsent = applyConsent;
+        applyConsent(getConsent());
+
+        window.recuperatechTrack = function (eventName, params) {
+          var consent = getConsent();
+          var safeParams = Object.assign(
+            {
+              page_path: window.location.pathname,
+            },
+            params || {}
+          );
+
+          if (consent && consent.analytics && typeof window.gtag === 'function') {
+            window.gtag('event', eventName, safeParams);
+          }
+
+          if (consent && consent.marketing && typeof window.fbq === 'function') {
+            if (eventName === 'whatsapp_click' || eventName === 'phone_click') {
+              // Registrado como intenção de contato (Contact), nunca como venda concluída
+              window.fbq('track', 'Contact', safeParams);
+            } else if (eventName === 'generate_lead') {
+              window.fbq('track', 'Lead', safeParams);
+            }
+          }
+
+          if (consent && (consent.analytics || consent.marketing) && Array.isArray(window.dataLayer)) {
+            window.dataLayer.push(Object.assign({ event: eventName }, safeParams));
+          }
+        };
+
+        document.addEventListener('click', function (e) {
+          var target = e.target.closest('a[data-track]');
+          if (!target) return;
+          var trackType = target.getAttribute('data-track');
+          var ctaPosition = target.getAttribute('data-cta-position') || 'unknown';
+          var serviceCategory = target.getAttribute('data-service-category') || 'geral';
+          window.recuperatechTrack(trackType, {
+            cta_position: ctaPosition,
+            service_category: serviceCategory,
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

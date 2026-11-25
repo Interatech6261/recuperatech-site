@@ -1,0 +1,90 @@
+---
+import { GALLERY_ITEMS } from '../data/gallery';
+---
+
+<div class="gallery-grid">
+  {GALLERY_ITEMS.map((item) => (
+    <figure class="gallery-card">
+      <div class="gallery-card__media">
+        <img
+          src={item.src}
+          alt={item.alt}
+          width="800"
+          height="600"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <figcaption class="gallery-card__caption">
+        <span class="gallery-card__cat">{item.category}</span>
+        <strong class="gallery-card__title">{item.title}</strong>
+      </figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .gallery-card {
+    margin: 0;
+    background-color: var(--color-surface-dark-2);
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  .gallery-card__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background-color: var(--color-black);
+  }
+
+  .gallery-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 250ms ease;
+  }
+
+  .gallery-card:hover .gallery-card__media img {
+    transform: scale(1.03);
+  }
+
+  .gallery-card__caption {
+    padding: 1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .gallery-card__cat {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-red);
+  }
+
+  .gallery-card__title {
+    font-family: var(--font-display);
+    font-size: 0.98rem;
+    color: var(--color-white-pure);
+  }
+</style>
